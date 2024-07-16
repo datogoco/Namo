@@ -411,37 +411,17 @@ function updateCartUI(existingCartItem, productToAdd, updatedPrice, quantity) {
   updateTheCartCount();
 }
 
-async function updateCartUIWithNewData(cart) {
+function updateCartUIWithNewData(cart) {
   console.log("Updating cart UI with cart data:", cart); // Log the cart data
 
   // Clear the existing cart UI
   itemContainer.innerHTML = "";
 
-  // Create an array of promises for fetching product details
-  const productDetailPromises = cart.items.map(item =>
-    getProductDetails(item.product),
-  );
-
-  // Wait for all promises to resolve
-  const productDetailsArray = await Promise.all(productDetailPromises);
-
-  // Process each cart item with the corresponding product details
-  cart.items.forEach((item, index) => {
+  // Re-render the cart items
+  cart.items.forEach(item => {
     console.log("Processing cart item:", item); // Log each item in the cart
-
-    const productDetails = productDetailsArray[index];
-    if (!productDetails) {
-      console.error("Failed to fetch product details for item:", item);
-      return;
-    }
-
-    const existingCartItem = findExistingCartItem(item.product);
-    updateCartUI(
-      existingCartItem,
-      productDetails,
-      productDetails.price,
-      item.quantity,
-    );
+    const existingCartItem = findExistingCartItem(item.product.toString());
+    updateCartUI(existingCartItem, item.product, item.price, item.quantity);
   });
 
   // Update the cart count

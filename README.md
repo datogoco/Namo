@@ -25,7 +25,7 @@
 
 5. Run the project:
    ```bash
-   npm start
+   npm run dev
    ```
 
 ## Description of the Issue

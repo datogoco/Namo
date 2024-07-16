@@ -1,0 +1,8 @@
+dist/
+dev-data/
+config/ssl/
+public/img/
+*.env
+config.env
+node_modules
+*.log

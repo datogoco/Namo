@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<%= csrfToken %>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/styles.css" />
+    
+
+    <title>NAMO</title>
+  </head>
+  <body>
+     <!-- Template Element -->
+    <template id="cart-item-template">
+      <div class="item" data-product-id="">
+        <div class="cart-item--img">
+          <img src="img/NAMO - front.jpg" class="step-img" alt="Namo ointment jar" />
+        </div>
+        <div class="cart-item--info">
+          <div class="cart-item--details">
+            <span class="cart-item--header">Namo Herbal Ointment</span>
+            <div class="cart-item--size">Size - 60ml | 2.03 oz</div>
+            <div class="cart-item--trash">
+              <ion-icon class="cart-trash--icon" name="trash-outline"></ion-icon>
+            </div>
+          </div>
+          <div class="cart-item--cost">
+            <div class="cart-item--total">
+              <button class="cart-item--quantity minus" name="minus" data-action="minus">
+                <ion-icon class="icon-minus" name="remove-outline"></ion-icon>
+              </button>
+              <input class="cart-item--input" type="number" min="1" step="1" value="1" />
+              <button class="cart-item--quantity plus" name="plus" data-action="plus">
+                <ion-icon class="icon-plus" name="add-outline"></ion-icon>
+              </button>
+            </div>
+            <div class="cart-item--price"></div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <div class="overlay"></div>
+    <header class="header nav-open">
+      <a href="/" class="logo-link">
+        <img class="logo" src="img/NAMO.png" alt="NAMO logo"/>
+      </a>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li>
+            <a class="main-nav-link underline" href="/">Home</a>
+          </li>
+          <li>
+            <a class="main-nav-link underline" href="#meals">About Us</a>
+          </li>
+          <li>
+            <a class="main-nav-link underline" href="#blog">Blog</a>
+          </li>
+          <li>
+            <a class="main-nav-link" data-action="toggle-cart">
+              <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+              <span class="cart-number"></span>
+              <span class="sr-only">Cart</span>
+            </a>
+          </li>
+          <li id="account-icon-container">
+            <a id="account-icon" class="main-nav-link" role="button" tabindex="0">
+              <ion-icon name="person" class="profile-icon" aria-hidden="true"></ion-icon>
+              <span class="sr-only">Account</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    
+
+    <main>
+      <section class="section-hero">
+        <div class="hero">
+          <div class="hero-text-box">
+            <div class="tag-heading">
+              <p class="tag-heading-text">
+                handcrafted
+              </p>
+              <ion-icon name="rose" class="tag-icon"></ion-icon>
+            </div>
+            <h1 class="heading-primary">
+              All natural ointment for back pain treatment
+            </h1>
+            <p class="hero-description">
+              Namo ointment offers a natural and effective solution for treating
+              back pain and the associated inflammation, harnessing the power of
+              nature to provide relief and comfort in your daily life.
+            </p>
+            <a href="#" class="btn btn--full margin-right-sm btn--add-to-cart"
+              >Add to cart</a
+            >
+            <a href="#how" class="btn btn--outline">Learn more &darr;</a>
+          </div>
+
+          <div class="hero-img-box">
+            <picture>
+              <source srcset="img/NAMO - Top - cut.png" type="image/jpg" />
+
+              <img
+                src="img/NAMO - Top - cut.png"
+                class="hero-img"
+                alt="The ointment picture from front"
+              />
+            </picture>
+          </div>
+        </div>
+      </section>
+
+      <!-- CART -->
+      <div class="cart-tab">
+        <div class="cart-top-container">
+          <div class="cart-drawer-header">
+            <h1 class="cart-heading">CART</h1>
+            <span class="cart-item-count"></span>
+          </div>
+          <div class="cart-close-container">
+            <button class="close-button">
+              <ion-icon class="cart-close-icon" name="close-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="list-cart">
+          <!-- ITEM 1 -->
+
+        </div>
+
+        <div class="subtotal-container">
+          <h3 class="subtotal-heading">Total</h3>
+          <div class="subtotal-price"></div>
+        </div>
+
+        <div class="cart-main-buttons grid--2-cols">
+          <button class="btn--go-to-cart">Go to cart</button>
+          <button class="btn--check-out">Ceck out</button>
+        </div>
+      </div>
+
+      <!-- SECTION HOW -->
+      <section class="section-how" id="how">
+        <div class="container">
+          <h2 class="heading-secondary">Improve the quality of your life</h2>
+        </div>
+
+        <div class="container grid grid--2-cols grid--center-v">
+          <!-- STEP 01 -->
+          <div class="step-text-box">
+            <h3 class="heading-tertiary">
+              Specially formulated natural ointment
+            </h3>
+            <p class="step-description">
+              Our natural ointment is expertly formulated with a blend of
+              healing botanicals to effectively soothe back pain, including
+              conditions like herniated disks. It's crafted to offer quick
+              relief with its anti-inflammatory properties, ensuring a gentle
+              yet potent solution for pain management without the use of harsh
+              chemicals.
+            </p>
+          </div>
+          <div class="step-img-box">
+            <img
+              src="img/NAMO - front.jpg"
+              class="step-img"
+              alt="Namo ointment jar"
+            />
+          </div>
+
+          <!-- STEP 02 -->
+          <div class="step-img-box">
+            <img
+              src="img/NAMO - front - open.jpg"
+              class="step-img"
+              alt="Namo ointment jar open"
+            />
+          </div>
+          <div class="step-text-box">
+            <h3 class="heading-tertiary">Long-lasting effect</h3>
+            <p class="step-description">
+              After completing the full course of treatment, you can look
+              forward to a significantly improved condition with long-lasting
+              benefits. This improvement will empower you to confidently return
+              to your favorite activities, enjoying the freedom and comfort you
+              once knew
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+      <h2 class="heading-secondary features-heading">
+        Benefits of using our product
+      </h2>
+      <div class="container grid grid--3-cols">
+        <div class="feature">
+          <ion-icon class="feature-icon" name="medkit-outline"></ion-icon>
+          <p class="feature-title">Skip the Pharmacy</p>
+          <p class="feature-text">
+            Avoid going in pharmacy stores, buying expensive drugs with bunch of
+            side effects and unexpected results.
+          </p>
+        </div>
+        <div class="feature">
+          <ion-icon class="feature-icon" name="leaf-outline"></ion-icon>
+          <p class="feature-title">Nature's Touch</p>
+          <p class="feature-text">
+            Our ointment, crafted with the finest natural ingredients, offers a
+            superior and gentle alternative to harsh artificial chemicals.
+          </p>
+        </div>
+        <div class="feature">
+          <ion-icon class="feature-icon" name="home-outline"></ion-icon>
+          <p class="feature-title">Heal at Home</p>
+          <p class="feature-text">
+            Experience the convenience of healing at home, without the need to
+            step outside.
+          </p>
+        </div>
+      </div>
+
+      <section class="section-testimonials" id="testimonials">
+        <h2 class="heading-secondary testimonial-heading">
+          Few words from our customers
+        </h2>
+        <div class="testimonials-container">
+          <button class="testimonial-nav testimonial-nav-left">
+            <i class="fa-solid fa-chevron-left fa-2xl"></i>
+          </button>
+          <div class="testimonials-wrapper">
+            <div class="testimonials">
+              <figure class="testimonial">
+                <img
+                  class="testimonial-img"
+                  alt="Photo of customer Mari Melitskauri"
+                  src="img/customers/profile - 01.jpg"
+                />
+                <blockquote class="testimonial-text">
+                  I initially purchased the ointment for my mom, and it worked
+                  wonders. Her pain has completely disappeared, and she's
+                  feeling much better now. Impressed by the results, I've
+                  started using it for my own arm and shoulder pain and have
+                  also recommended it to a friend.
+                </blockquote>
+                <p class="testimonial-name">&mdash; Mari Melitskauri</p>
+              </figure>
+
+              <figure class="testimonial">
+                <img
+                  class="testimonial-img"
+                  alt="Photo of customer Jean Torres"
+                  src="img/customers/profile - 02.jpg"
+                />
+                <blockquote class="testimonial-text">
+                  As a professional gardener, wrist and joint pain was something
+                  I thought I had to live with. That changed when I discovered
+                  your ointment. It's been a game-changer for me, providing
+                  relief and allowing me to continue doing the job I love
+                  without discomfort. I've even recommended it to my colleagues,
+                  who are equally impressed.
+                </blockquote>
+                <p class="testimonial-name">&mdash; Jean Torres</p>
+              </figure>
+
+              <figure class="testimonial">
+                <img
+                  class="testimonial-img"
+                  alt="Photo of customer Joseph Murphy"
+                  src="img/customers/profile - 03.jpg"
+                />
+                <blockquote class="testimonial-text">
+                  Dealing with chronic back pain has been a part of my life for
+                  so long, I almost gave up on finding a solution. Your ointment
+                  has been a lifesaver. It's easy to apply, doesn't have a
+                  strong scent, and most importantly, it works! I've experienced
+                  a significant reduction in pain and stiffness. Thank you for
+                  creating such a fantastic product.
+                </blockquote>
+                <p class="testimonial-name">&mdash; Joseph Murphy</p>
+              </figure>
+
+              <figure class="testimonial">
+                <img
+                  class="testimonial-img"
+                  alt="Photo of customer Jessica Miller"
+                  src="img/customers/profile - 04.jpg"
+                />
+                <blockquote class="testimonial-text">
+                  I was skeptical at first, but after reading so many positive
+                  reviews, I decided to give your ointment a try for my
+                  recurring ankle pain. I'm amazed at the results. Not only has
+                  the pain subsided, but the swelling has also gone down. It's
+                  comforting to know that I'm using a natural product that
+                  actually delivers on its promises. I've since recommended it
+                  to family members who are equally pleased with the results.
+                </blockquote>
+                <p class="testimonial-name">&mdash; Jessica Miller</p>
+              </figure>
+
+              <figure class="testimonial">
+                <img
+                  class="testimonial-img"
+                  alt="Photo of customer Emily Johnson"
+                  src="img/customers/profile - 05.jpg"
+                />
+                <blockquote class="testimonial-text">
+                  I've been struggling with knee pain for years and tried
+                  countless remedies with little success. After using your
+                  ointment for just a few weeks, the difference is remarkable.
+                  My mobility has improved, and the pain has significantly
+                  reduced. I'm truly grateful for this product and won't
+                  hesitate to recommend it to others dealing with similar
+                  issues.
+                </blockquote>
+                <p class="testimonial-name">&mdash; Emily Johnson</p>
+              </figure>
+
+              <figure class="testimonial">
+                <img
+                  class="testimonial-img"
+                  alt="Photo of customer Laura Davis"
+                  src="img/customers/profile - 06.jpg"
+                />
+                <blockquote class="testimonial-text">
+                  I've been using this herbal ointment for a few weeks now to
+                  manage my sciatica pain, and the results have been
+                  astonishing. The pain that used to hinder my activities has
+                  reduced drastically. I love that it's natural and doesn't have
+                  any harsh chemicals.
+                </blockquote>
+                <p class="testimonial-name">&mdash; Laura Davis</p>
+              </figure>
+
+              <figure class="testimonial">
+                <img
+                  class="testimonial-img"
+                  alt="Photo of customer Peter Cox"
+                  src="img/customers/profile - 07.jpg"
+                />
+                <blockquote class="testimonial-text">
+                  This herbal ointment has been a blessing for my
+                  posture-related back pain. As someone who spends hours at a
+                  desk, I've found it to be incredibly helpful in managing
+                  discomfort and stiffness. It's now a staple in my daily
+                  routine.
+                </blockquote>
+                <p class="testimonial-name">&mdash; Peter Cox</p>
+              </figure>
+            </div>
+          </div>
+          <button class="testimonial-nav testimonial-nav-right">
+            <i class="fa-solid fa-chevron-right fa-2xl"></i>
+          </button>
+        </div>
+      </section>
+
+      <section class="section-cta" id="cta">
+        <div class="cta-text-box">
+          <h2 class="heading-secondary-cta">
+            Join the Journey to Natural Relief!
+          </h2>
+          <p class="cta-text">
+            Discover the power of nature with our Herbal Back Pain Ointment.
+            Sign up now to receive exclusive updates, expert tips, and special
+            offers right to your inbox. Embrace a life free from back pain, the
+            natural way.
+          </p>
+
+          <form class="cta-form" name="sign-up" method="POST" netlify>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div>
+              <label for="full-name">Full Name</label>
+              <input
+                id="full-name"
+                type="text"
+                placeholder="John Smith"
+                name="full-name"
+                required
+              />
+            </div>
+
+            <div>
+              <label for="email">Email Address</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="me@example.com"
+                name="email"
+                required
+              />
+            </div>
+
+            <div>
+              <label for="select-where">Where did you hear about us?</label>
+              <select id="select-where" name="select-where" required>
+                <option value="">Please choose one option:</option>
+                <option value="friends">Friends and family</option>
+                <option value="youtube">Youtube video</option>
+                <option value="podcast">Podcast</option>
+                <option value="ad">Facebook Ad</option>
+                <option value="others">Others</option>
+              </select>
+            </div>
+
+            <button class="btn btn--form">Sign up now</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- FOOTER SECTION -->
+      <footer class="footer">
+        <div class="container grid grid--footer">
+          <div class="logo-col">
+            <a href="#" class="footer-logo">
+              <img class="logo" src="img/NAMO.png" alt="Omnifood logo" />
+            </a>
+
+            <ul class="social-links">
+              <li>
+                <a class="footer-link" href="#">
+                  <ion-icon
+                    class="social-icon"
+                    name="logo-instagram"
+                  ></ion-icon>
+                </a>
+              </li>
+              <li>
+                <a class="footer-link" href="#">
+                  <ion-icon class="social-icon" name="logo-facebook"></ion-icon>
+                </a>
+              </li>
+              <li>
+                <a class="footer-link" href="#">
+                  <ion-icon class="social-icon" name="logo-twitter"></ion-icon>
+                </a>
+              </li>
+            </ul>
+
+            <p class="copyright">
+              Copyright &copy; <span class="year">2024</span> by NAMO, Inc. All
+              rights reserved.
+            </p>
+          </div>
+          <div class="address-col">
+            <p class="footer-heading">Contact us</p>
+            <address class="contacts">
+              <p class="address">
+                623 Harrison St., 2nd Floor, San Francisco, CA 94107
+              </p>
+              <p>
+                <a class="footer-link" href="tel:415-201-6370">316-301-3690</a
+                ><br />
+                <a class="footer-link" href="mailto:hello@omnifood.com"
+                  >support@namo.com</a
+                >
+              </p>
+            </address>
+          </div>
+          <nav class="nav-col">
+            <p class="footer-heading">Account</p>
+            <ul class="footer-nav">
+              <li><a class="footer-link" href="#">Sign in</a></li>
+              <li><a class="footer-link" href="#">Create account</a></li>
+              <li><a class="footer-link" href="#">iOS app</a></li>
+              <li><a class="footer-link" href="#">Android app</a></li>
+            </ul>
+          </nav>
+          <nav class="nav-col">
+            <p class="footer-heading">Company</p>
+            <ul class="footer-nav">
+              <li><a class="footer-link" href="#">About Namo</a></li>
+              <li><a class="footer-link" href="#">For Business</a></li>
+              <li><a class="footer-link" href="#">Our partners</a></li>
+              <li><a class="footer-link" href="#">Careers</a></li>
+            </ul>
+          </nav>
+
+          <nav class="nav-col">
+            <p class="footer-heading">Resources</p>
+            <ul class="footer-nav">
+              <li><a class="footer-link" href="#">Help center</a></li>
+              <li><a class="footer-link" href="#">Privacy & terms</a></li>
+            </ul>
+          </nav>
+        </div>
+      </footer>
+    </main>
+
+    <script src="dist/main.bundle.js"></script>
+    <script
+      src="https://kit.fontawesome.com/484f573b46.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

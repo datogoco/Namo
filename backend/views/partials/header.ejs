@@ -1,0 +1,35 @@
+<header class="header nav-open">
+  <a href="/" class="logo-link">
+    <img class="logo" src="img/NAMO.png" alt="NAMO logo" />
+  </a>
+  <nav class="main-nav">
+    <ul class="main-nav-list">
+      <li>
+        <a class="main-nav-link underline" href="/">Home</a>
+      </li>
+      <li>
+        <a class="main-nav-link underline" href="#meals">About Us</a>
+      </li>
+      <li>
+        <a class="main-nav-link underline" href="#blog">Blog</a>
+      </li>
+      <li>
+        <a class="main-nav-link" data-action="toggle-cart">
+          <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          <span class="cart-number"><%= typeof cartCount !== 'undefined' ? cartCount : '' %></span>
+          <span class="sr-only">Cart</span>
+        </a>
+      </li>
+      <li id="account-icon-container">
+        <a id="account-icon" class="main-nav-link" role="button" tabindex="0">
+          <ion-icon
+            name="person"
+            class="profile-icon"
+            aria-hidden="true"
+          ></ion-icon>
+          <span class="sr-only">Account</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>

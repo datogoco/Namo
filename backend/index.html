@@ -1,0 +1,49 @@
+<div
+  class="cart-item--body"
+  data-product-id="${productId}"
+  data-unit-price="${price}"
+>
+  <div class="cart-item--grid">
+    <div class="cart-item--details">
+      <div class="cart-item--img">
+        <img src="${imageUrl}" class="step-img" alt="${productName}" />
+      </div>
+      <div class="cart-item--info">
+        <span class="cart-item--name">${productName}</span>
+        <div class="cart-item--size">Size: ${size}</div>
+        <div class="cart-item--inventory">In Stock: ${inventoryQuantity}</div>
+      </div>
+    </div>
+
+    <div class="cart-item--cost-wrap">
+      <div class="cart-item--total">
+        <button
+          type="button"
+          class="cart-item--quantity minus"
+          name="minus"
+          data-action="minus"
+        >
+          <ion-icon class="icon-minus" name="remove-outline"></ion-icon>
+        </button>
+
+        <input
+          type="number"
+          class="cart-item--input"
+          min="1"
+          step="1"
+          value="${quantity}"
+        />
+
+        <button
+          type="button"
+          class="cart-item--quantity plus"
+          name="plus"
+          data-action="plus"
+        >
+          <ion-icon class="icon-plus" name="add-outline"></ion-icon>
+        </button>
+      </div>
+      <div class="cart-item--price">$${price}</div>
+    </div>
+  </div>
+</div>

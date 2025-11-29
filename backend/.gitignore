@@ -1,0 +1,16 @@
+# Ignore real environment files
+.env
+config.env
+
+# Allow templates
+!.env.example
+!config.env.example
+
+# Folders
+dist/
+dev-data/
+config/ssl/
+public/img/
+
+node_modules
+*.log

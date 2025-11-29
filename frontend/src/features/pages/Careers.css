@@ -1,0 +1,12 @@
+.careers-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-ink-primary);
+}
+
+.careers-page h1 {
+  margin-bottom: 2.4rem;
+}

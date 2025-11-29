@@ -1,0 +1,12 @@
+{
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": "*.ejs",
+      "options": {
+        "parser": "html"
+      }
+    }
+  ]
+}

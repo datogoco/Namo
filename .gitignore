@@ -1,0 +1,22 @@
+# dependencies
+node_modules
+
+# builds
+dist
+build
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# env
+.env
+.env.*
+config.env
+
+# app-specific
+backend/dev-data
+backend/config/ssl
+.DS_Store

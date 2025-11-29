@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/signup.css" />
+    <script src="dist/main.bundle.js" defer></script>
+    <script src="dist/signup.bundle.js" defer></script>
+
+    <title>NAMO</title>
+  </head>
+  <body>
+    <!-- Template Element -->
+    <template id="cart-item-template">
+      <div class="item" data-product-id="" data-unit-price="">
+        <div class="cart-item--img">
+          <img
+            src="img/NAMO - front.jpg"
+            class="step-img"
+            alt="Namo ointment jar"
+          />
+        </div>
+        <div class="cart-item--info">
+          <div class="cart-item--details">
+            <span class="cart-item--header">Namo Herbal Ointment</span>
+            <div class="cart-item--size">Size - 60ml | 2.03 oz</div>
+            <div class="cart-item--trash">
+              <ion-icon
+                class="cart-trash--icon"
+                name="trash-outline"
+              ></ion-icon>
+            </div>
+          </div>
+          <div class="cart-item--cost">
+            <div class="cart-item--total">
+              <button
+                class="cart-item--quantity minus"
+                name="minus"
+                data-action="minus"
+              >
+                <ion-icon class="icon-minus" name="remove-outline"></ion-icon>
+              </button>
+              <input
+                class="cart-item--input"
+                type="number"
+                min="1"
+                step="1"
+                value="1"
+              />
+              <button
+                class="cart-item--quantity plus"
+                name="plus"
+                data-action="plus"
+              >
+                <ion-icon class="icon-plus" name="add-outline"></ion-icon>
+              </button>
+            </div>
+            <div class="cart-item--price"></div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <div class="overlay"></div>
+    <%- include('partials/header') %>
+
+    <main>
+      <!-- SIGNUP SECTION -->
+      <section class="section-signup">
+        <div class="signup-container">
+          <!-- Error box -->
+          <% if (typeof error !== 'undefined' && error) { %>
+          <div class="form-error"><%= error %></div>
+          <% } %>
+
+          <form
+            class="form"
+            action="/api/v1/users/signup"
+            method="POST"
+            novalidate
+          >
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+            <div class="signup-text-box">
+              <h2 class="heading-secondary-log">Create Account</h2>
+              <p class="signup-text">Sign up with your social media</p>
+
+              <div class="social-media-container">
+                <a href="#" class="social-media--btn">
+                  <i class="fa-brands fa-google fa-xl"></i>
+                </a>
+                <a href="#" class="social-media--btn">
+                  <i class="fa-brands fa-facebook-f fa-xl"></i>
+                </a>
+                <a href="#" class="social-media--btn">
+                  <i class="fa-brands fa-linkedin-in fa-xl"></i>
+                </a>
+              </div>
+
+              <p class="signup-text">or</p>
+
+              <div class="signup-form">
+                <div class="signup-form--group">
+                  <label for="name">Name</label>
+                  <input
+                    id="name"
+                    type="text"
+                    placeholder="Enter your name"
+                    name="name"
+                    class="signup-form--control"
+                    value="<%= (form && form.name) || '' %>"
+                    required
+                  />
+                </div>
+
+                <div class="signup-form--group">
+                  <label for="email">Email</label>
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter email address"
+                    name="email"
+                    class="signup-form--control"
+                    value="<%= (form && form.email) || '' %>"
+                    required
+                  />
+                </div>
+
+                <div class="signup-form--group">
+                  <label for="password">Password</label>
+                  <input
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    name="password"
+                    class="signup-form--control"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="signup-pass-description--container">
+                <p class="signup-pass-description--text">
+                  Passwords must be at least 8 characters.
+                </p>
+              </div>
+
+              <button type="submit" class="sign-up--btn">Sign up</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- CART SECTION -->
+      <div class="cart-tab">
+        <div class="cart-top-container">
+          <div class="cart-drawer-header">
+            <h1 class="cart-heading">CART</h1>
+            <span class="cart-item-count"></span>
+          </div>
+          <div class="cart-close-container">
+            <button class="close-button">
+              <ion-icon class="cart-close-icon" name="close-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="list-cart">
+          <!-- ITEM 1 -->
+        </div>
+
+        <div class="subtotal-container">
+          <h3 class="subtotal-heading">Total</h3>
+          <div class="subtotal-price"></div>
+        </div>
+
+        <div class="cart-main-buttons grid--2-cols">
+          <button class="btn--go-to-cart">Go to cart</button>
+          <button class="btn--check-out">Ceck out</button>
+        </div>
+      </div>
+
+      <!-- FOOTER SECTION -->
+      <%- include('partials/footer') %>
+    </main>
+
+    <script
+      src="https://kit.fontawesome.com/484f573b46.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

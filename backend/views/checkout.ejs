@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/checkout.css" />
+
+    <title>Checkout | NAMO</title>
+  </head>
+  <body data-authenticated="<%= user ? 'true' : 'false' %>">
+    <!-- TEMPLATE -->
+    <template id="cart-item-template">
+      <div class="item" data-product-id="" data-unit-price="">
+        <div class="cart-item--img">
+          <img
+            src="img/NAMO - front.jpg"
+            class="step-img"
+            alt="Namo ointment jar"
+          />
+        </div>
+        <div class="cart-item--info">
+          <div class="cart-item--details">
+            <span class="cart-item--header">Namo Herbal Ointment</span>
+            <div class="cart-item--size">Size - 60ml | 2.03 oz</div>
+            <div class="cart-item--trash">
+              <ion-icon class="cart-trash--icon" name="trash-outline"></ion-icon>
+            </div>
+          </div>
+          <div class="cart-item--cost">
+            <div class="cart-item--total">
+              <button
+                class="cart-item--quantity minus"
+                name="minus"
+                data-action="minus"
+              >
+                <ion-icon class="icon-minus" name="remove-outline"></ion-icon>
+              </button>
+              <input
+                class="cart-item--input"
+                type="number"
+                min="1"
+                step="1"
+                value="1"
+              />
+              <button
+                class="cart-item--quantity plus"
+                name="plus"
+                data-action="plus"
+              >
+                <ion-icon class="icon-plus" name="add-outline"></ion-icon>
+              </button>
+            </div>
+            <div class="cart-item--price"></div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <div class="overlay"></div>
+    <% const formatCurrency = value =>
+    Number(value || 0).toLocaleString("en-US", {
+    style: "currency", currency: "USD" });
+    const totalItems = typeof cartCount === "number" ? cartCount : 0; %>
+    <%- include('partials/header', { cartCount: totalItems }) %>
+
+    <main class="checkout-shell">
+      <section class="checkout-layout">
+        <div class="checkout-grid">
+          <div class="checkout-titles">
+            <p class="checkout-meta--eyebrow">Secure checkout</p>
+          </div>
+          <div class="checkout-titles">
+            <p class="checkout-order--summary">ORDER SUMMARY</p>
+          </div>
+          <section class="checkout-panel">
+            <form id="checkout-form" novalidate>
+              <fieldset class="checkout-fieldset">
+                <legend>Contact information</legend>
+                <div class="form-grid">
+                  <label class="checkout--form-control">
+                    <span>Email address</span>
+                    <input
+                      type="email"
+                      name="email"
+                      autocomplete="email"
+                      placeholder="you@example.com"
+                      value="<%= user ? user.email : '' %>"
+                      required
+                    />
+                  </label>
+                  <label class="checkout--form-control">
+                    <span>Phone number</span>
+                    <input
+                      type="tel"
+                      name="phone"
+                      autocomplete="tel"
+                      placeholder="+1 555 000 0000"
+                    />
+                  </label>
+                </div>
+                <label class="checkbox">
+                  <input type="checkbox" name="smsUpdates" />
+                  <span>Send me order updates over SMS</span>
+                </label>
+              </fieldset>
+
+              <fieldset class="checkout-fieldset">
+                <legend>Shipping address</legend>
+                <div class="form-grid">
+                  <label class="checkout--form-control">
+                    <span>First name</span>
+                    <input
+                      type="text"
+                      name="firstName"
+                      autocomplete="given-name"
+                      required
+                    />
+                  </label>
+                  <label class="checkout--form-control">
+                    <span>Last name</span>
+                    <input
+                      type="text"
+                      name="lastName"
+                      autocomplete="family-name"
+                      required
+                    />
+                  </label>
+                </div>
+                <label class="checkout--form-control">
+                  <span>Street address</span>
+                  <input
+                    type="text"
+                    name="address"
+                    autocomplete="address-line1"
+                    placeholder="123 Serenity Ave"
+                    required
+                  />
+                </label>
+                <label class="checkout--form-control">
+                  <span>Apartment, suite, etc. (Optional)</span>
+                  <input
+                    type="text"
+                    name="addressLine2"
+                    autocomplete="address-line2"
+                  />
+                </label>
+                <div class="form-grid">
+                  <label class="checkout--form-control">
+                    <span>City</span>
+                    <input
+                      type="text"
+                      name="city"
+                      autocomplete="address-level2"
+                    />
+                  </label>
+                  <label class="checkout--form-control">
+                    <span>State</span>
+                    <input
+                      type="text"
+                      name="state"
+                      autocomplete="address-level1"
+                    />
+                  </label>
+                  <label class="checkout--form-control">
+                    <span>Postal code</span>
+                    <input
+                      type="text"
+                      name="postal"
+                      autocomplete="postal-code"
+                    />
+                  </label>
+                </div>
+                <label class="checkbox">
+                  <input type="checkbox" name="saveAddress" />
+                  <span>Save this address to my profile</span>
+                </label>
+              </fieldset>
+
+              <fieldset class="checkout-fieldset">
+                <legend>Shipping method</legend>
+                <div class="shipping-options">
+                  <label class="shipping-option">
+                    <input
+                      type="radio"
+                      name="shippingMethod"
+                      value="standard"
+                      data-cost="9.95"
+                      checked
+                    />
+                    <div>
+                      <span class="shipping-option__title">Standard</span>
+                      <p>Delivers in 4-6 business days</p>
+                    </div>
+                    <strong>$9.95</strong>
+                  </label>
+                  <label class="shipping-option">
+                    <input
+                      type="radio"
+                      name="shippingMethod"
+                      value="express"
+                      data-cost="19.95"
+                    />
+                    <div>
+                      <span class="shipping-option__title">Express</span>
+                      <p>Delivers in 2 business days</p>
+                    </div>
+                    <strong>$19.95</strong>
+                  </label>
+                  <label class="shipping-option">
+                    <input
+                      type="radio"
+                      name="shippingMethod"
+                      value="priority"
+                      data-cost="0"
+                    />
+                    <div>
+                      <span class="shipping-option__title">Priority</span>
+                      <p>Complimentary for orders over $100</p>
+                    </div>
+                    <strong>Free</strong>
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset class="checkout-fieldset">
+                <legend>Payment</legend>
+                <p class="fieldset-helper">
+                  All transactions are secured and encrypted. We never store
+                  card data.
+                </p>
+                <div class="payment-grid">
+                  <label class="checkout--form-control">
+                    <span>Card number</span>
+                    <input
+                      type="text"
+                      name="cardNumber"
+                      inputmode="numeric"
+                      autocomplete="cc-number"
+                      placeholder="1234 5678 9123 4567"
+                    />
+                  </label>
+                  <label class="checkout--form-control">
+                    <span>Expiration (MM/YY)</span>
+                    <input
+                      type="text"
+                      name="cardExpiry"
+                      inputmode="numeric"
+                      autocomplete="cc-exp"
+                      placeholder="08 / 27"
+                    />
+                  </label>
+                  <label class="checkout--form-control">
+                    <span>CVC</span>
+                    <input
+                      type="text"
+                      name="cardCvc"
+                      inputmode="numeric"
+                      autocomplete="cc-csc"
+                      placeholder="123"
+                    />
+                  </label>
+                  <label class="checkout--form-control">
+                    <span>Postal code</span>
+                    <input
+                      type="text"
+                      name="cardPostal"
+                      autocomplete="postal-code"
+                    />
+                  </label>
+                </div>
+                <label class="checkbox">
+                  <input type="checkbox" name="saveCard" />
+                  <span>Securely save this card for faster checkout</span>
+                </label>
+              </fieldset>
+
+              <button class="btn btn--checkout" type="submit">
+                Place secure order
+              </button>
+            </form>
+          </section>
+
+          <aside
+            class="checkout-summary"
+            data-checkout-summary
+            data-subtotal="<%= summary.subtotal %>"
+            data-tax-rate="<%= summary.estimatedTaxRate %>"
+            data-initial-shipping="<%= summary.shipping %>"
+          >
+            <button
+              class="summary-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="mobile-summary"
+            >
+              <span>Order summary</span>
+              <span class="summary-toggle__total"
+                ><%= formatCurrency(summary.total) %></span
+              >
+            </button>
+
+            <div
+              class="summary-panel"
+              id="mobile-summary"
+              data-total-items="<%= totalItems %>"
+            >
+              <ul class="summary-items">
+                <% if (totalItems === 0) { %>
+                <li class="summary-empty">
+                  <p>Your cart is empty. Add items to complete checkout.</p>
+                  <a class="btn btn--ghost" href="/cart">Return to cart</a>
+                </li>
+                <% } else { %>
+                <li class="summary-count">
+                  <span
+                    ><%= totalItems %> Item<%= totalItems === 1 ? "" : "s" %>
+                    ready to ship</span
+                  >
+                </li>
+                <% cartItems.forEach(item => { %>
+                <li class="summary-item">
+                  <div class="summary-item__media">
+                    <img src="<%= item.imageUrl %>" alt="<%= item.name %>" />
+                    <span class="summary-item__qty"><%= item.quantity %></span>
+                  </div>
+                  <div class="summary-item__meta">
+                    <p class="summary-item__name"><%= item.name %></p>
+                    <p class="summary-item__detail">Size: <%= item.size %></p>
+                  </div>
+                  <div class="summary-item__price">
+                    <strong
+                      ><%= formatCurrency(item.price * item.quantity) %></strong
+                    >
+                  </div>
+                </li>
+                <% }) } %>
+              </ul>
+
+              <dl class="summary-breakdown">
+                <div class="summary-row">
+                  <dt>Subtotal</dt>
+                  <dd data-summary-subtotal>
+                    <%= formatCurrency(summary.subtotal) %>
+                  </dd>
+                </div>
+                <div class="summary-row">
+                  <dt>Shipping</dt>
+                  <dd data-summary-shipping>
+                    <%= summary.shipping === 0 ? 'Free' :
+                    formatCurrency(summary.shipping) %>
+                  </dd>
+                </div>
+                <div class="summary-row">
+                  <dt>Est. taxes</dt>
+                  <dd data-summary-tax>
+                    <%= formatCurrency(summary.estimatedTax) %>
+                  </dd>
+                </div>
+                <div class="summary-row summary-row--total">
+                  <dt>Total</dt>
+                  <dd data-summary-total>
+                    <%= formatCurrency(summary.total) %>
+                  </dd>
+                </div>
+              </dl>
+
+              <div class="summary-note">
+                <p>Need to make a change?</p>
+                <a class="btn--return-to-cart" href="/cart">Return to cart</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="cart-tab">
+        <div class="cart-top-container">
+          <div class="cart-drawer-header">
+            <h1 class="cart-heading">CART</h1>
+            <span class="cart-item-count"></span>
+          </div>
+          <div class="cart-close-container">
+            <button class="close-button">
+              <ion-icon class="cart-close-icon" name="close-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="list-cart">
+          <!-- ITEM 1 -->
+        </div>
+
+        <div class="subtotal-container">
+          <h3 class="subtotal-heading">Total</h3>
+          <div class="subtotal-price"></div>
+        </div>
+
+        <div class="cart-main-buttons grid--2-cols">
+          <button class="btn--go-to-cart">Go to cart</button>
+          <button class="btn--check-out">Ceck out</button>
+        </div>
+      </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script
+      src="https://kit.fontawesome.com/484f573b46.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="/dist/main.bundle.js"></script>
+    <script src="/dist/checkout.bundle.js" defer></script>
+  </body>
+</html>
